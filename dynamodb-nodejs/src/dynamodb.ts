@@ -8,7 +8,6 @@ import { UserInput } from "./types";
 
 const tableName = "User";
 
-// Set the region and endpoint
 const dynamoDB = new DynamoDB({
   endpoint: "http://localhost:8000",
   region: "us-west-2",
@@ -18,7 +17,6 @@ const dynamoDB = new DynamoDB({
   },
 });
 
-// Example function to create a table
 export const createTable = async () => {
   try {
     const data = await dynamoDB.createTable({
@@ -42,10 +40,8 @@ export const createTable = async () => {
   }
 };
 
-// Example function to put an item
 export const putItem = async (input: UserInput) => {
   try {
-    // Primeira parte: sempre insere o USER_HISTORY#
     const historyTransaction = new TransactWriteItemsCommand({
       TransactItems: [
         {
@@ -69,7 +65,6 @@ export const putItem = async (input: UserInput) => {
 
     await dynamoDB.send(historyTransaction);
 
-    // Segunda parte: verificar o transactionDate antes de atualizar o USER#
     const existingUser = await findByReference({
       id: input.id,
       referenceId: input.referenceId,
@@ -79,7 +74,6 @@ export const putItem = async (input: UserInput) => {
 
     const existingTransactionDate = unmarshall(existingUser!)?.TransactionDate;
 
-    // Só atualiza se o novo transactionDate for maior do que o existente
     if (
       !existingTransactionDate ||
       input.transactionDate > existingTransactionDate
