@@ -20,7 +20,7 @@ func main() {
 func handleGet(w http.ResponseWriter, r *http.Request) {
 	rand.Seed(time.Now().UnixNano())
 
-	if rand.Intn(3) == 0 {
+	if rand.Intn(2) == 0 {
 		http.Error(w, "Random error occurred", http.StatusInternalServerError)
 		return
 	}
@@ -32,7 +32,7 @@ func handleGet(w http.ResponseWriter, r *http.Request) {
 func handlePost(w http.ResponseWriter, r *http.Request) {
 	rand.Seed(time.Now().UnixNano())
 
-	if rand.Intn(3) == 0 {
+	if rand.Intn(2) == 0 {
 		http.Error(w, "Random error occurred", http.StatusInternalServerError)
 		return
 	}

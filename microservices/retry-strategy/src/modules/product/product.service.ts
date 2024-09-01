@@ -14,16 +14,7 @@ export class ProductService {
         this.extServiceUrl,
         {
           retries: 3,
-        },
-      );
-
-      await this.httpService.post<ProductDto, void>(
-        this.extServiceUrl,
-        {
-          name: 'new product',
-        },
-        {
-          retries: 3,
+          retryDelay: 1000,
         },
       );
 
@@ -37,6 +28,7 @@ export class ProductService {
     try {
       await this.httpService.post<ProductDto, void>(this.extServiceUrl, input, {
         retries: 3,
+        retryDelay: 1000,
       });
     } catch (error) {
       throw error;
